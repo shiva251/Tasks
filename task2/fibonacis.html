@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+            var usernum=Number(prompt("enter a number"));
+    // function fibonacis() {
+        var firstnum=0;
+        var secondnum=1;
+        var result=0;
+        var count=0;
+    
+        while(true) {
+            result = firstnum + secondnum;
+            count++;
+            if (result >= usernum){
+                break;
+            }
+            firstnum = secondnum;
+            secondnum = result;
+            // document.getElementById('p1').innerHTML=result;
+            document.write("The fibonacis series is :" + result + "<br/>");
+
+        }
+       
+    // }
+    </script>
+</head>
+<body>
+    <p id="p1"></p>
+</body>
+</html>

@@ -1,0 +1,159 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+.header1 {
+    padding: 20px;
+    text-align: center;
+    background-color: blueviolet;
+    color:yellow;  
+    width: 100%
+}
+.nav1 { 
+    background-color: darkgray;
+    /* padding: 10px;   */
+    width: 100%;
+}
+ol {
+    margin-top: 0;
+    padding-top: 10px;
+}
+li {
+    display: inline;
+}
+li a {
+    text-decoration: none;
+    margin-left: 30px;
+    color: white;
+    
+    font-size: 24px; 
+}
+.content1 {
+    width: 30%;
+    background-color:gray;
+    color: white;
+    text-align: justify;
+    padding: 10px;
+    height: 373px;
+    float: left;  
+}
+
+.content2 {
+    width: 70%;
+    height: auto;
+    background-color:rgb(40, 133, 209);
+    color: white;
+    padding: 10px;
+    float: left;   
+    text-align: center;
+}
+img {
+    /* padding: 15px; */
+    border: 1px solid transparent;
+    border-radius: 20px;
+}
+.foot {
+    clear: left;
+    width: 100%;
+    height: auto;
+    background-color: #333;
+}
+
+.f1 {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    color: white;
+}
+
+@media screen and (max-width: 600px) {
+    .header1{
+        padding: 5px;
+        text-align: left;
+        color: blue;  
+        background-color: rgb(184, 245, 71);
+    }
+    .nav1 {
+        background-color: rgb(20, 4, 19);
+        color: white;
+        height: auto;
+    }
+    .nav1 li  {
+      display:block;
+      width: 100%;
+      /* background-color: rgb(60, 171, 214); 
+            */
+     
+    }
+    li a{
+        margin-left: 0;
+        color: yellow;
+        padding: 5px;
+    }
+    .content1, .content2, img {
+        width: 100%;
+        height: auto;
+        background-color: brown;       
+       
+    }
+    .foot {
+        clear: both;
+        width: 100%;
+        text-align: center;
+         background-color: aqua;
+    }
+    .f1 {
+        margin: auto;
+        width: 50%;
+        text-align: center;
+        color: rgb(236, 6, 6);
+    }
+
+  }
+
+@media screen and (max-width: 991px) and (min-width: 768px) {
+    .header1{
+        padding: 5px;
+        text-align: left;
+        color: white;  
+        background-color: rgb(50, 17, 199);
+    }
+    .nav1 {
+        background-color: rgb(235, 29, 217);
+        height: auto;
+    }
+    
+    .nav1 li  {
+      /* display:block; */
+      width: 100%;
+           
+     
+    }
+    li a{
+        margin-left: 0;
+        color: rgb(52, 22, 221);
+        padding: 5px;
+    }
+    .content1, .content2, img {
+        width: 100%;
+        height: auto;
+        background-color: rgb(42, 157, 165);        
+       
+    }
+       
+}
+.foot {
+    clear: both;
+    width: 100%;
+    text-align: center;
+     background-color: rgb(207, 22, 207);
+}
+.f1 {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    color: rgb(248, 246, 246);
+}
+
+  }
