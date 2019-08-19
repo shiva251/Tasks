@@ -1,0 +1,230 @@
+1. JavaScript functions are used to perform operations. We can call JavaScript function many times to reuse the code.
+
+advantages: 
+-----------
+
+a. Code reusability: We can call a function several times so it save coding
+
+b. Less coding: It makes our program compact. We don’t need to write many lines of code each time to perform a common task.
+
+Syntax: function functionName([arg1, arg2, ...argN]){  
+ //code to be executed  
+}  
+
+
+Note: a. JavaScript Functions can have 0 or more arguments.
+
+b. JS Function with arguments: We can call function by passing arguments. 
+
+c. JS Function with return value: We can call function that returns a value and use it in our program. 
+
+
+
+
+2. JS Function Invocation:
+-------------------------- JavaScript functions can be invoked in 4 different ways.
+
+Each method differs in how this is initialized.
+
+a. The "this" keyword:
+---------------------- In JavaScript, the thing called this, is the object that "owns" the current code.
+
+The value of this, when used in a function, is the object that "owns" the function
+
+Note: this is not a variable. It is a keyword. You cannot change the value of this.
+
+b. Invoking a JavaScript Function:
+---------------------------------- the code inside a JavaScript function will execute when "something" invokes it.
+
+The code in a function is not executed when the function is defined. It is executed when the function is invoked.
+
+Some people use the term "call a function" instead of "invoke a function".
+
+It is also quite common to say "call upon a function", "start a function", or "execute a function".
+
+In this tutorial, we will use invoke, because a JavaScript function can be invoked without being called.
+
+Ex:
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>
+The global function (myFunction) returns the product of the arguments (a ,b):
+</p>
+
+<p id="demo"></p>
+
+<script>
+function myFunction(a, b) {
+    return a * b;
+}
+document.getElementById("demo").innerHTML = myFunction(10, 2); 
+</script>
+
+</body>
+</html>
+
+
+The function above does not belong to any object. But in JavaScript there is always a default global object.
+
+In HTML the default global object is the HTML page itself, so the function above "belongs" to the HTML page.
+
+In a browser the page object is the browser window. The function above automatically becomes a window function.
+
+Note: myFunction() and window.myFunction() is the same function
+
+
+
+c. Invoking a Function as a Method:
+----------------------------------- In JavaScript you can define function as object methods.
+
+The following example creates an object (myObject), with two properties (firstName and lastName), and a method (fullName):
+
+Ex: 
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>myObject.fullName() will return John Doe:</p>
+
+<p id="demo"></p>
+
+<script>
+var myObject = {
+    firstName:"John",
+    lastName: "Doe",
+    fullName: function() {
+        return this.firstName + " " + this.lastName;
+    }
+}
+document.getElementById("demo").innerHTML = myObject.fullName(); 
+</script>
+
+</body>
+</html>
+
+The fullName method is a function. The function belongs to the object. myObject is the owner of the function.
+
+The thing called this, is the object that "owns" the JavaScript code. In this case the value of this is myObject.
+
+Note: Change the fullName method to return the value of this:
+-----
+
+Ex: <!DOCTYPE html>
+<html>
+<body>
+
+<p>The value of <b>this</b>, in an object method, is the owner object.</p>
+
+<p id="demo"></p>
+
+<script>
+var myObject = {
+    firstName:"John",
+    lastName: "Doe",
+    fullName: function() {
+        return this;
+    }
+}
+document.getElementById("demo").innerHTML = myObject.fullName();
+</script>
+
+</body>
+</html>
+
+Note: Invoking a function as an object method, causes the value of this to be the object itself.
+
+
+
+d. Invoking a Function with a Function Constructor:
+--------------------------------------------------- If a function invocation is preceded with the new keyword, it is a constructor invocation.
+
+It looks like you create a new function, but since JavaScript functions are objects you actually create a new object:
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>In this example, myFunction is a function constructor:</p>
+
+<p id="demo"></p>
+
+<script>
+function myFunction(arg1, arg2) {
+    this.firstName = arg1;
+    this.lastName  = arg2;
+}
+
+var x = new myFunction("John","Doe")
+document.getElementById("demo").innerHTML = x.firstName; 
+</script>
+
+</body>
+</html>
+
+
+A constructor invocation creates a new object. The new object inherits the properties and methods from its constructor.
+
+The this keyword in the constructor does not have a value.
+The value of this will be the new object created when the function is invoked.
+
+
+e. Invoking a Function with a Function Method:
+---------------------------------------------- In JavaScript, functions are objects. JavaScript functions have properties and methods.
+
+call() and apply():
+------------------ are predefined JavaScript function methods. Both methods can be used to invoke a function, and both methods must have the owner object as first parameter.
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo"></p>
+
+<script>
+var myObject;
+function myFunction(a, b) {
+    return a * b;
+}
+myObject = myFunction.call(myObject, 10, 2);    // Will return 20 
+document.getElementById("demo").innerHTML = myObject; 
+</script>
+
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo"></p>
+
+<script>
+var myObject, myArray;
+function myFunction(a, b) {
+    return a * b;
+}
+myArray = [10, 2]
+myObject = myFunction.apply(myObject, myArray);      // Will return 20 
+document.getElementById("demo").innerHTML = myObject; 
+</script>
+
+</body>
+</html>
+
+
+
+Both methods take an owner object as the first argument. The only difference is that call() takes the function arguments separately, and apply() takes the function arguments in an array.
+
+In JavaScript strict mode, the first argument becomes the value of this in the invoked function, even if the argument is not an object.
+
+In "non-strict" mode, if the value of the first argument is null or undefined, it is replaced with the global object.
+
+With call() or apply() you can set the value of this, and invoke a function as a new method of an existing object.
+
+

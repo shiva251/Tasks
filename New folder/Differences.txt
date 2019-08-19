@@ -1,0 +1,258 @@
+1. Differences:
+---------------
+
+1. Angular 1.x was not built with mobile support in mind, where Angular 2 is mobile oriented.
+
+2. Angular 2 provides more choice for languages. You can use any of the language from ES5, ES6, TypeScript or Dart to write Angular 2 code. Where, Angular 1.x has ES5, ES6 and Dart. Addition of TypeScript is a great step as TypeScript is awesome way to write JavaScript
+
+3. AngularJS 1.x is easy to setup. All you need to do is to add reference of the library and you are good to go. Where AngularJS 2 is dependent of other libraries and it requires some efforts to set up it
+
+
+4. Angular 1.x controllers and $scope are gone. We can say that controllers are replaced with “Components” in Angular 2. Angular 2 is component based.
+
+Angular 1.x Controller:
+-----------------------
+
+var myApp = angular
+   .module("myModule", [])
+   .controller("productController", function($scope) {
+     var prods = { name: "Prod1", quantity: 1 };
+     $scope.products = prods;
+});
+
+Angular 2 Components using TypeScript:
+--------------------------------------
+
+import { Component } from 'angular2/core';
+ 
+@Component({
+  selector: 'prodsdata',
+  template: `
+    <h3>{{prods.name}}</h3> `
+})
+ 
+export class ProductComponent {
+  prods = {  name: 'Prod1', quantity: 1 };
+}
+
+
+Notice, there is a class with export keyword, @Component annotation (that’s also new in Angular 2). The @Component annotation adds the metadata to the class.
+
+
+
+5. Angular 1.x has 2 ways to bootstrap angular. One using ng-app attribute and other via code.
+
+<script>
+   angular.element(document).ready(function() {
+      angular.bootstrap(document, ['myApp']);
+   });
+</script>
+
+In Angular 2, say goodbye to ng-app. The only way to bootstrap angular is via code.
+
+import { bootstrap } from 'angular2/platform/browser';
+import { ProductComponent } from './product.component';
+ 
+bootstrap(ProductComponent);
+
+The bootstrap function is used and it takes starting component which is also parent component of your angular application.
+
+
+6. Structural directives syntax is changed. ng-repeat is replaced with *ngFor.
+
+Angular 1.x structural directives:
+----------------------------------
+
+<ul>
+   <li ng-repeat="technology in technologies">
+     {{technology.name}}
+   </li>
+</ul>
+<div ng-if="technologies.length">
+   <h3>You have {{technologies.length}} technologies.</h3>
+</div>
+
+Angular 2 structural directives:
+--------------------------------
+
+<ul>
+  <li *ngFor="#technology of technologies">
+    {{technology.name}}
+  </li>
+</ul>
+<div *ngIf="technologies.length">
+  <h3>You have {{technologies.length}} technologies.</h3>
+</div>
+
+Notice that Asterisk(*) sign is used as prefix for structural directives, in is replaced with of and camelCase syntax is used.
+UPDATE: In AngularJS 2 version “2.0.0-beta.17”, there is a small change with respect to *ngFor. Instead of “#” use “let”
+
+7. In Angular 2, local variables are defined using hash(#) prefix 
+
+8. To filter output in our templates in Angular 1.x, we use the pipe character (|) and one or more filters. Where in Angular 2 they are called pipes. The syntax remains same.
+
+9. Angular 2 uses camelCase syntax for built-in directives. For example, ng-class is now ngClass and ng-model is now ngModel.
+
+10. One of the major change in Angular 2 is, that it directly uses the valid HTML DOM element properties and events. Due to this, many of the available built-in directives in Angular 1.x are now no longer required. Like, ng-href, ng-src, ng-show and ng-hide. Angular 2 uses href, src and hidden properties to get the same output. And same goes with event based directives like ng-click and ng-blur.
+
+<button ng-click="doSomething()">
+
+
+And in Angular 2, take the HTML event and wrap it with parentheses.
+
+<button (click)="doSomething()">
+
+11. In Angular 1.x, ng-bind is used for one way data binding, but with Angular 2 it is replaced with [property], where property is valid HTML DOM element property.
+
+Angular 1.x, one way data binding
+
+<input ng-bind="technology.name"></input>
+
+Angular 2, one way data binding is achieved via wrapping the properties with square brackets.
+
+<input [value]="technology.name"></input>
+<div [style.color]="color">Some text...</div>
+
+12. In Angular 1.x, ng-model is used for two way data binding, but with Angular 2 it is replaced with [(ngModel)].
+
+Angular 1.x, two way data binding
+
+<input ng-model="technology.name"></input>
+
+In Angular 2,
+
+<input [(ngModel)]="technology.name"></input>
+
+In Angular 1.x, we can define a service via 5 different ways.
+--------------------------------------------------------------
+
+Factory
+Service
+Provider
+Constant
+Values
+
+And in Angular 2, class is the only way to define a service.
+------------------------------------------------------------
+
+import { Injectable } from 'angular2/core';
+ 
+@Injectable()
+export class TechnologyService {
+  getTechnologies() {
+    return [
+      new technology(1, 'Angular'),
+      new technology(2, 'jQuery',
+      new technology(3, 'Node'),
+      new technology(4, 'Knockout')
+    ];
+  }
+}
+
+
+And once defined, you need to register it with your main component using provider.
+import { Component } from 'angular2/core';
+import { TechnologyService } from './character.service';
+ 
+@Component({
+  selector: 'my-app',
+  template: '<technology-list></technology-list>',
+  providers: [TechnologyService]
+})
+export class AppComponent {}
+
+
+13. One of the advantage of Angular is Dependency Injection. With Angular 2 DI is there but now there is a different way to inject dependencies. As everything is class in Angular, so DI is achieve via constructor.
+
+var myApp = angular
+   .module("myModule", [])
+   .controller("productController", function($scope, $http) {
+     var prods = { name: "Prod1", quantity: 1 };
+     $scope.products = prods;
+});
+
+In Angular 2,
+
+import { Injectable } from 'angular2/core';
+ 
+@Injectable()
+export class TechnologyService {
+  constructor(private _http: Http) { }
+ 
+  getTechnologies() {
+    return [
+      new technology(1, 'Angular'),
+      new technology(2, 'jQuery',
+      new technology(3, 'Node'),
+      new technology(4, 'Knockout')
+    ];
+  }
+}
+
+Notice, @Injectable() is added to service class. It is similar to Angluar 1.x $inject used for DI.
+
+
+14. In Angular 1.x, we use $routeProvider.when() to configuring routing. Where in Angular 2, @RouteConfig{(...}) is used. ng-view present in Angular 1.x is replaced with <router-outlet>
+
+In Angular 1.x,:
+var app = angular
+        .module("MyModule", ["ngRoute"])
+        .config(function ($routeProvider) { 
+            $routeProvider 
+              .when("/home", { templateUrl: "home.html", controller: "homeController" })
+              .when("/technology", { templateUrl: "technology.html", controller: "technologyController" }) 
+        })
+       .controller("homeController", function ($scope) {
+            $scope.message = "Home Page"; 
+        })    
+       .controller("technologyController", function ($scope) {
+             $scope.technologies = ["ASP.NET", "jQuery", "AngularJS", "JavaScript"]; 
+       }) 
+	   
+	   
+	   
+In Angular 2,
+
+import { Component } from 'angular2/core';
+import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
+import { TechnologyComponent } from './technology/technology.component';
+import { TechnologyService } from './Technology/Technology.service';
+ 
+@Component({
+  selector: 'my-app',
+  templateUrl: 'app/app.component.html',
+  directives: [ROUTER_DIRECTIVES],
+  providers: [
+    ROUTER_PROVIDERS,
+    TechnologyService
+  ]
+})
+@RouteConfig([
+  { path: '/home', name: 'Home', component: HomeComponent, useAsDefault: true },
+  { path: '/technology', name: 'Technology', component: TechnologyComponent },
+])
+export class AppComponent { }
+
+Note: 
+------
+
+Routing is a separate module that’s why need to import it. And 2 more configurations needs to be to make routing work, one is adding [ROUTER_DIRECTIVES] as directive and other is to add ROUTER_DIRECTIVES in providers list. 
+
+And in HTML page,
+
+<ul>
+  <li><a [routerLink]="['Home']" href="">Home</a></li>
+  <li><a [routerLink]="['Technology']" href="">Technology</a></li>
+</ul>
+
+ng-href is also replaced by [routerLink]
+
+15. Angular 2 implements webstandards like components and it’s provide better performance than Angular 1.
+
+
+
+
+	   
+
+
+

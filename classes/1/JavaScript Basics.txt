@@ -1,0 +1,112 @@
+1. Variable: is simply a name of storage location
+	two types: local and global variables
+There are some rules while declaring a JavaScript variable (also known as identifiers).
+
+a. Name must start with a letter (a to z or A to Z), underscore( _ ), or dollar( $ ) sign.
+b. After first letter we can use digits (0 to 9), for example value1.
+c. JavaScript variables are case sensitive, for example x and X are different variables.
+
+Ex:
+ <html>
+<body>
+<script>  
+var x = 10;  
+var y = 20;  
+var z=x+y;  
+document.write(z);  
+</script>  
+</body>
+</html>
+
+Output: 30
+
+
+2. JS Local VAriable: A JavaScript local variable is declared inside block or function. It is accessible within the function or block only
+
+<script>  
+function abc(){  
+var x=10;//local variable  
+}  
+</script>  
+
+
+3. JS Global Variable: A JavaScript global variable is accessible from any function. A variable i.e. declared outside the function or declared with window object is known as global variable. For example:
+
+<html>
+<body>
+<script>  
+var data=200;//gloabal variable  
+function a(){  
+document.writeln(data);  
+}  
+function b(){  
+document.writeln(data);  
+}  
+a();//calling JavaScript function
+b();
+  
+</script>  
+</body>
+</html>
+
+
+Output: 200 200
+
+
+4. A JavaScript global variable is declared outside the function or declared with window object. It can be accessed from any function.
+
+To declare JavaScript global variables inside function, you need to use window object. For example:
+
+<html>
+<body>
+<script>
+function m(){  
+window.value=100;//declaring global variable by window object  
+}  
+function n(){  
+alert(window.value);//accessing global variable from other function  
+}  
+m();
+n();
+</script>
+</body>
+</html>
+
+
+Note: When you declare a variable outside the function, it is added in the window object internally. You can access it through window object also.
+
+var value=50;  
+function a(){  
+alert(window.value);//accessing global variable   
+}  
+
+
+
+5. Data types: JavaScript is a dynamic type language, means you don't need to specify type of the variable because it is dynamically used by JavaScript engine
+
+JavaScript provides different data types to hold different types of values. There are two types of data types in JavaScript.
+
+a. Primitive data type
+b. Non-primitive (reference) data type
+
+var a=40;//holding number  
+var b="Rahul";//holding string  
+
+
+JS Primitive Data types: String, Number, Boolean, Undefined, Null
+JS Non-primitive data types: Object, Array, RegExp
+
+
+6. Operators: JavaScript operators are symbols that are used to perform operations on operands
+Ex: var sum=10+20;
+
+Ex: var a = x*y;
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,126 @@
+1. Angular CLI: A command line interface for Angular. The Angular CLI is a tool to initialize, develop, scaffold and maintain Angular applications
+
+2. To install the Angular CLI:
+
+	npm install -g @angular/cli
+	
+3. Generating and serving an Angular project via a development server Create and run a new project:
+
+		ng new my-project
+		cd my-project
+		ng serve
+		
+4. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+
+5. Note:
+========
+
+A. Bundling: All builds make use of bundling, and using the --prod flag in ng build --prod or ng serve --prod will also make use of uglifying and tree-shaking functionality.
+
+B. Running unit tests: ng test
+	- Tests will execute after a build is executed via Karma, and it will automatically watch your files for changes. You can run tests a single 
+	time via --watch=false or --single-run.
+	
+C. Running end-to-end tests: ng e2e
+	-Before running the tests make sure you are serving the app via ng serve. End-to-end tests are run via Protractor(Protractor is an end-to-end test framework for Angular and AngularJS applications. Protractor runs tests against your application running in a real browser, interacting with it as a user would.)
+	
+*Note:
+======
+Installing a specific version:
+------------------------------ The CLI is installed both globally (the command above with the -g argument to npm install) and also within the project. To install a different version of the CLI, you can just update the version locally within your project. The globally installed package will always delegate to the local one.
+
+There are several different versions available at any time:
+
+Install a previous version, maybe because of a bug in the latest version. For example to get 6.0.2: npm install @angular/cli@6.0.2
+
+
+6. Workspace Files/Structure:
+=============================
+
+a. .editorconfig:	Configuration for code editors.
+
+b. .gitignore:		Specifies intentionally untracked files that Git should ignore.
+
+c. angular.json:	CLI configuration defaults for all projects in the workspace, including configuration options for build, serve, and test tools that the CLI 
+					uses, such as TSLint, Karma, and Protractor. For details, see Angular Workspace Configuration.
+					
+d. node_modules:	Provides npm packages to the entire workspace.
+
+e. package.json:	Configures npm package dependencies that are available to all projects in the workspace. 
+
+f. package-lock.json:	Provides version information for all packages installed into node_modules by the npm client. 
+
+g. tsconfig.json:	Default TypeScript configuration for apps in the workspace, including TypeScript and Angular template compiler options. 
+
+h. tslint.json:		Default TSLint configuration for apps in the workspace.
+
+i: README.md:	Introductory documentation.
+
+
+7. App Project Files:
+======================
+
+a. app/: 	Contains the component files in which your app logic and data are defined. See details in App source folder below.
+b. assets/:	Contains image files and other asset files to be copied as-is when you build your application.
+c. environments/:	Contains build configuration options for particular target environments. By default there is an unnamed standard development environment and a production ("prod") environment. 
+
+d. browserlist:	Configures sharing of target browsers and Node.js versions among various front-end tools. 
+e. favicon.ico:	An icon to use for this app in the bookmark bar.
+f.index.html:	The main HTML page that is served when someone visits your site. The CLI automatically adds all JavaScript and CSS files when building your app, so you typically don't need to add any <script> or<link> tags here manually.
+
+g. main.ts:	The main entry point for your app. Compiles the application with the JIT compiler and bootstraps the application's root module (AppModule) to run in the browser. You can also use the AOT compiler without changing any code by appending the --aot flag to the CLI build and serve commands.
+
+
+h. polyfills.ts: 	Provides polyfill scripts for browser support.
+
+i. styles.sass:	Lists CSS files that supply styles for a project. The extension reflects the style preprocessor you have configured for the project.
+
+j. test.ts:	The main entry point for your unit tests, with some Angular-specific configuration. You don't typically need to edit this file.
+
+k. tsconfig.app.json:	Inherits from the workspace-wide tsconfig.json file.
+
+l. tsconfig.spec.json:	Inherits from the workspace-wide tsconfig.json file.
+
+m. tslint.json:	Inherits from the workspace-wide tslint.json file.
+
+
+
+
+8. Default app project e2e files:
+================================= An e2e/ subfolder contains configuration and source files for a set of end-to-end tests that correspond to the initial app. Workspace-wide node_modules dependencies are visible to this project.
+
+Ex:
+
+my-app/
+  e2e/                  (end-to-end test app for my-app)
+    src/                (app source files)
+    protractor.conf.js  (test-tool config)
+    tsconfig.e2e.json   (TypeScript config inherits from workspace tsconfig.json)
+	
+	
+
+9. App source folder:
+====================== Inside the src/ folder, the app/ folder contains your app's logic and data. Angular components, templates, and styles go here. An assets/ subfolder contains images and anything else your app needs. Files at the top level of src/ support testing and running your app.
+	
+a. app/app.component.ts:	Defines the logic for the app's root component, named AppComponent. The view associated with this root component becomes the root 	of the view hierarchy as you add components and services to your app.
+
+b. app/app.component.html:	Defines the HTML template associated with the root AppComponent.
+
+c. app/app.component.css:	Defines the base CSS stylesheet for the root AppComponent.
+
+d. app/app.component.spec.ts	Defines a unit test for the root AppComponent.
+
+e. app/app.module.ts:	Defines the root module, named AppModule, that tells Angular how to assemble the application. Initially declares only the AppComponent.
+
+Note: As you add more components to the app, they must be declared here.
+
+f. assets/*:	Contains image files and other asset files to be copied as-is when you build your application.
+
+
+
+
+
+
+
+
+	

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>myObject.fullName() will return John Doe:</p>
+
+<p id="demo"></p>
+
+<script>
+var myObject = {
+    firstName:"aravind",
+	age: 50,
+    lastName: "m",
+    fullName: function() {
+        return this.firstName + " " + this.lastName + " "+ this.age;
+    }
+}
+document.getElementById("demo").innerHTML = myObject.fullName(); 
+</script>
+
+</body>
+</html>

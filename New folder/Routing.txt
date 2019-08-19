@@ -1,0 +1,91 @@
+Routing:
+======== Router is an essential element of the Angular framework. It allows developers to build Single Page Applications or SPAs with multiple components and allows client side navigation and routing between the various components. You can use the browser's URL to navigate between Angular components in the same way you can use the usual server side navigation.
+
+Creating the Angular 6 Routing Module:
+======================================
+
+- To add routing to your Angular application, You can either define the routes inside the main application module or preferably on its own module. So create the app.routing.ts file inside the src/app folder.
+
+- Next you need to use the RouterModule and Routes from @angular/router. 
+So first import them using the following code:
+
+import { RouterModule, Routes } from '@angular/router';
+
+You also need to import ModuleWithProviders which allows you to create a module (NgModule) with its providers.
+
+Next you need to define the array of routes:
+
+const routes: Routes = [];
+We can fill this array also as per the required paths if possilbe. Now let's create and export our routing module:
+
+First import ModuleWithProviders from @angular/core:
+
+import { ModuleWithProviders } from "@angular/core";
+
+- Next create the routing module:
+
+export const routingModule: ModuleWithProviders = RouterModule.forRoot(routes);
+
+
+
+Note: We are using RouterModule.forRoot() to return a module of type ModuleWithProviders. 
+
+Note:
+===== In Angular 7, you can skip this step by letting the CLI generate and setup routing on your behalf by simply answering Yes when the CLI prompts you if you Would like to add Angular routing?.
+
+Now let's define some routes:
+-----------------------------
+
+In the routes array, add the following object:
+
+{ path: 'products', component: ProductListComponent }
+
+- This first route links the /products path to the ProductListComponent component so when /products is visited the router will render the product list component.
+
+- Let's add a second route:
+
+  { path: "product/:id", component: ProductDetailComponent }
+
+  -This will link routes like /product/1 or /product/9 etc. to the ProductDetailComponent component.
+
+- We can also add this route which will redirect the empty route to /products so whenever the user visits the home path he will be redirected to the products component:
+
+{ path: '',  redirectTo: '/products', pathMatch: 'full' },
+
+Here, - pathMatch is used to specify the matching strategy full or prefix. 
+	  - full means that the whole URL's path needs to match by the matching algorithm. 
+	  - prefix means the first route where path matches the start of the URL will be chosen. 
+	  - In the case of empty path if we don't set the full matching strategy then we won't get the desired behavior as any path starts with an empty path.
+
+
+
+Importing the Routing Module Inside The Main Module:
+=====================================================
+
+Open src/app/app.module.ts then import the created routing module using:
+
+import { routingModule } from './routing.module'
+Next add routingModule to the imports array:
+
+imports: [
+    BrowserModule,
+    routingModule
+],
+
+Adding the Router Outlet:
+==========================
+
+Now let's tell Angular where to insert the matched components using <router-outlet>. Open the app.component.html file which contains the HTML template for the main AppComponent then simple add:
+
+<router-outlet></router-outlet> 
+After adding this, the AppComponent will be the shell of our application where other components will be rendered.
+
+
+Adding Router Navigation Links:
+================================
+The last thing you need to do is adding the navigation links that take you from one component to another. Angular provides routerLink and routerLinkActive directives that need to be added to <a> anchors. We have previously some navigation in our template.
+
+routerLink: this directive is used instead of href in the <a> tags 
+routerLinkActive: this directive is used to add a CSS class to an element when the link's route becomes active.
+
+

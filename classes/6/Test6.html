@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>The value of <b>this</b>, in an object method, is the owner object.</p>
+
+<p id="demo"></p>
+
+<script>
+var test = {
+    firstName:"John",
+    lastName: "Doe",
+    fullName: function() {
+	alert(this);
+	console.log(this);
+        return this;
+    }
+}
+document.getElementById("demo").innerHTML = test.fullName();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+1. Forms:
+========== Angular 7 provides you with two different approaches to dealing with forms: template driven and reactive(or model-driven) forms. Reactive forms generally provide you with more control and form validation can be unit tested as opposed to template driven forms.
+
+In general:
+
+Reactive forms are more robust: they're more scalable, reusable, and testable. If forms are a key part of your application, or you're already using reactive --------------- patterns for building your application, use reactive forms.
+
+Template-driven forms are useful for adding a simple form to an app, such as an email list signup form. They're easy to add to an app, but they don't scale as
+-----------------  well as reactive forms. If you have very basic form requirements and logic that can be managed solely in the template, use template-driven forms.
+
+
+To get started, we have to visit the app.module.ts file and import or register the Reactive Forms Module:
+
+Ex:
+----
+
+// other imports
+import { ReactiveFormsModule } from '@angular/forms';
+
+// other code
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule  // <- Add here
+  ],
+  
+
+Next, in component.ts file:
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-contact',
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.scss']
+})
+export class ContactComponent implements OnInit {
+
+  messageForm: FormGroup;
+  submitted = false;
+  success = false;
+
+  constructor(private formBuilder: FormBuilder) { }
+
+  ngOnInit() {
+    this.messageForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      message: ['', Validators.required]
+    });
+  }
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.messageForm.invalid) {
+        return;
+    }
+
+    this.success = true;
+}
+
+}
+
+Note from the above:
+-------------------- 
+First, we're importing FormBuilder, FormGroup, Validators from @angular/forms.
+
+Then we're setting a few boolean properties that will help us determine when the form has been submitted and if it validation is successful.
+
+Then we're creating an instance of the formBuilder in the constructor. We then use this form building to construct our form properties in the ngOnInit() lifecycle hook.
+
+We have two properties, name and message. 
+
+Then we created an onSubmit() method that will be called when the user submits the form. This is typically where you would call upon a method in the service to communicate with a mail service of sorts.
+
+In html:
+---------
+
+ <h1>Contact us</h1>
+
+<form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+
+    <h5 *ngIf="success">Your form is valid!</h5>
+
+    <label>
+      Name:
+      <input type="text" formControlName="name">
+      <div *ngIf="submitted && messageForm.controls.name.errors" class="error">
+        <div *ngIf="messageForm.controls.name.errors.required">Your name is required</div>
+      </div>
+    </label>
+  
+    <label>
+      Message:
+      <textarea formControlName="message"></textarea>
+      <div *ngIf="submitted && messageForm.controls.message.errors" class="error">
+        <div *ngIf="messageForm.controls.message.errors.required">A message is required</div>
+      </div>
+    </label>
+
+    <input type="submit" value="Send message" class="cta">
+  
+  </form>
+
+  <div *ngIf="submitted" class="results">
+    <strong>Name:</strong> 
+    <span>{{ messageForm.controls.name.value }}</span>
+
+    <strong>Message:</strong> 
+    <span>{{ messageForm.controls.message.value }}</span>
+  </div>
+  
+  
+ 
+CSS:
+----
+
+label {
+    display: block;
+    
+    input, textarea {
+        display: block;
+        width: 50%;
+        margin-bottom: 20px;
+        padding: 1em;
+    }
+
+    .error {
+        margin-top: -20px;
+        background: yellow;
+        padding: .5em;
+        display: inline-block;
+        font-size: .9em;
+        margin-bottom: 20px;
+    }
+}
+
+.cta {
+    background: #7700FF;
+    border: none;
+    color: white;
+
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 1em;
+    cursor: pointer;
+    font-family: 'Montserrat';
+}
+
+.results {
+    margin-top: 50px;
+
+    strong {
+        display: block;
+    }
+    span {
+        margin-bottom: 20px;
+        display: block;
+    }
+}
+
+Note: Reactive forms are pure JS, which makes them the winners when it comes to reusability and dynamic use.
+
+Template driven:
+----------------
+There are two changes:
+
+- You import FormsModule.
+
+- You add the FormsModule to the list of imports defined in the @NgModule decorator. This gives the application access to all of the template-driven forms features, including ngModel.
+
+Note: Each input element has an id property that is used by the label element's for attribute to match the label to its input control. Each input element has a
+-----  name property that is required by Angular forms to register the control with the form
+
+Angular gave us the powerful tool that is reactive forms:
+----------------------------------------------------------
+
+1. Readability: If we use template-driven forms, we’ll have to make an effort to understand the form structure
+
+2. Validators: If we want to use custom validators with template-driven forms, we must create a custom directive in addition to the validation functionality
+
+3. Another important thing that you should pay attention to is that unlike reactive forms, template-driven forms are asynchronous. One of the side effects of this is that if you have a validator that depends on another control
+
+4. Visibility: With template-driven forms getting a reference to the form or its controls is more verbose
+
+5. Two way binding: Template-driven forms expose a two-way binding option which breaks the one-way data flow and immutability principles and makes your code bug-prone and hard to reason about
+
+6. Testability: When using template-driven forms, we must create a component in order to test our forms and use one of the async testing helpers that Angular provides. When using reactive forms, this is not required, simplifying the testing process
+
+
+
+Differences:
+-------------
+
+							REACTIVE										TEMPLATE-DRIVEN
+							
+Setup (form model):		More explicit, created in component class			Less explicit, created by directives
+Data model:				Structured											Unstructured
+Predictability:			Synchronous											Asynchronous
+Form validation:		Functions											Directives
+Mutability:				Immutable											Mutable
+Scalability:			Low-level API access								Abstraction on top of APIs
+
+
+
+Note: 
+----- Reactive forms use an explicit and immutable approach to managing the state of a form at a given point in time. Each change to the form state returns a new state, which maintains the integrity of the model between changes. Reactive forms are built around observable streams, where form inputs and values are provided as streams of input values, which can be accessed synchronously.
+
+Reactive forms differ from template-driven forms in distinct ways. Reactive forms provide more predictability with synchronous access to the data model, immutability with observable operators, and change tracking through observable streams. If you prefer direct access to modify data in your template, template-driven forms are less explicit because they rely on directives embedded in the template, along with mutable data to track changes asynchronously.
+
+
+
+

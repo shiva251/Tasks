@@ -1,0 +1,47 @@
+1. Bootstrap 3 is designed to be responsive to mobile devices. Mobile-first styles are part of the core framework.
+
+To ensure proper rendering and touch zooming, add the following <meta> tag inside the <head> element:
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+The width=device-width part sets the width of the page to follow the screen-width of the device (which will vary depending on the device).
+
+The initial-scale=1 part sets the initial zoom level when the page is first loaded by the browser.
+
+
+2. Containers:
+--------------- Bootstrap also requires a containing element to wrap site contents.
+
+There are two container classes to choose from:
+
+- The .container class provides a responsive fixed width container
+- The .container-fluid class provides a full width container, spanning the entire width of the viewport
+
+Note: Containers are not nestable (you cannot put a container inside another container).
+
+3. Why we use Bootstrap ?
+--------------------------
+
+- Bootstrap includes HTML and CSS based design templates for typography, forms, buttons, tables, navigation, modals, image carousels and many other, as well as optional JavaScript plugins
+
+- Bootstrap also gives you the ability to easily create responsive designs
+
+-Easy to use
+
+- Mobile first
+
+- Responsive web design
+
+- Browser support
+
+- SPA(Single Page Applications)
+
+- It takes very less time to develop(web development)
+
+- we can develop CSS-themes, Layout, themes, grids, components
+
+Note: It is an open source and Bootstrap is a sleek, intuitive, and powerful, mobile first front-end framework for faster and easier web development. It uses HTML, CSS and Javascript.
+
+
+
+

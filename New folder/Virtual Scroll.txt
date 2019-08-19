@@ -1,0 +1,106 @@
+1. Virtual Scroll:
+================== For example, if you  have to display thousands of elements at a time in a table or list. Adding these many number of items in the DOM can cause problems and forces the application to slow down.
+
+But fortunately there is a technique called Virtual Scroll to display the items without slowing the app down.
+
+Let’s evaluate all the options before getting into Virtual Scroll.
+
+There are 3 ways to handle this:
+
+- Pagination: Paginate your list and show items as chunks it’s performant but you can’t get the whole snapshot of your list at once and you also have to click back and forth between pages. (e.g. Google Search Results)
+
+- Infinite Scroll: Initially loads only few items and keep appending more items to the list as you scroll, it gives the complete snapshot of the list but as more and more items keep adding, list is going to slow down eventually as the number of nodes in the DOM are increasing and thus application will start slowing down.
+
+- Virtual Scroll: Display only small subset of the data that is in the viewport and keep changing the records as the user scrolls. It keep the number of DOM elements constant hence boosting the performance of the application.
+
+First:
+
+1. Type the following command to add Angular CDK version 7.0
+
+NPM: npm install @angular/cdk@7.0.0
+
+Angular CLI: ng add @angular/cdk@7.0.0
+
+2. you need to import Scrolling Module into your application app.module.ts
+
+//
+import { ScrollingModule } from '@angular/cdk/scrolling';
+//
+
+@NgModule({
+  declarations: [
+    
+  ],
+  imports: [
+    
+    ScrollingModule
+  ]
+  
+Ex:
+---
+
+Generate 10000 items list in your app.component.ts 
+  
+  
+  export class AppComponent {
+  numbers: number[] = [];
+
+  constructor() {
+    for (let index = 0; index < 10000; index++) {
+      this.numbers.push(index);
+    }
+  }
+}
+
+
+Let’s render the list in app.component.html file
+
+<h1 class="center">Virtual Scroll using Angular 7</h1>
+
+<ul class="list">
+  <cdk-virtual-scroll-viewport  style="height: 500px" itemSize="90" >
+    <ng-container *cdkVirtualFor="let n of numbers">
+      <li> {{n}} </li>
+    </ng-container>
+  </cdk-virtual-scroll-viewport>
+</ul>
+
+
+For styling:
+
+add styles to the application in your styles.css file
+
+/* You can add global styles to this file, and also import other style files */
+body {
+    font-family: 'Segoe UI', Roboto, Ubuntu, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-image: url(assets/images/icons-background.svg);
+    background-color: #507ce8;
+    color: #fff;
+    overflow: hidden;
+}
+
+ul {
+    max-width: 500px;
+    color: #333;
+    list-style: none;
+    margin: 50px auto;
+    padding: 10px;
+}
+
+.list li {
+    padding: 25px;
+    background: #FAFAAF;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.center {
+    text-align: center;
+}
+
+
+
+

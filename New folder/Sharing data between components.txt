@@ -1,0 +1,168 @@
+Share Component Data with Other Components:
+============================================ We use Angular’s Input(sharing data from parent to child), Output & EventEmitter (sharing data from child to parent), and ViewChild(sharing data from child to parent) to share component data.
+
+To share component data you can use:
+------------------------------------
+
+a. @Input: property binding
+----------------------------  If you want to pass data from the parent component to the child component, then you need to use two things: @Input and property binding.
+
+Here, we set in the child component an variable namedchildExample which is a string. In front of the variable we set Angular’s:@Input decorator.
+
+Ex:
+---
+
+// Child
+import { Component, Input } from '@angular/core';
+@Component({
+  selector: 'app-child',
+  template: `
+      Example: {{ childExample }}
+  `
+})
+export class ChildComponent {
+  @Input() childExample: string;
+}
+
+This gives the option to add an attribute to the selector (<app-child>)of the child, highlighted in the example below;
+
+Ex:
+---
+
+// Parent
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-child [childExample]="parentExample"></app-child>
+  `
+})
+export class ParentComponent{
+  parentExample: string = 'Hello Angular 7';
+  
+}
+
+
+In the parent, we declare an variable named:parentExample . We gave it a value to [childExample] . The result is that you display the text “Hello Angular 7” in the child component.
+
+
+b. @Output & EventEmitter: event binding:
+------------------------------------------ With @Output and EventEmitter it is the other way around. You can pass data back from the child to the parent component. Again in the child, we declare a variable but this time with the@Output decorator and a new EventEmitter:
+
+@Output() exampleOutput = new EventEmitter<string>();
+
+We want to emit an event to the parent component by doing the following:
+
+exampleMethodChild() {
+   this.exampleOutput.emit(this.exampleChild);
+}
+
+From the below, What we are doing here is that on every button click in the child component we are passing the text “Hello Angular 7” to a parent component.
+
+Ex:
+---
+
+// Child
+import { Component, Output, EventEmitter } from '@angular/core';
+@Component({
+  selector: 'app-child',
+  template: `
+<button (click)="exampleMethodChild()">Example output</button>`
+})
+export class ChildComponent {
+  @Output() exampleOutput = new EventEmitter<string>();
+  
+  exampleChild: string = 'Hello Angular 7';
+  exampleMethodChild() {
+    this.exampleOutput.emit(this.exampleChild);
+  }
+}
+
+
+In our parent component we can now set an event to the child selector (<app-child>). As you see we use the exampleOutput from the child, which has as value a method called exampleMethodParent with parameter $event .
+
+Ex:
+---
+
+// Parent
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    Example: {{ exampleParent }}
+    <app-child (exampleOutput)="exampleMethodParent($event)">
+    </app-child>
+  `
+})
+export class ParentComponent {
+  exampleParent: string;
+
+  exampleMethodParent($event) {
+    this.exampleParent = $event;
+  }
+}
+
+Our result here is on every button click in the child, we get a text through an event in our parent method. In this method, we give example the value of $event . Through interpolation ({{ exampleParent }} ), we can now see our child’s example text.
+
+
+c. @ViewChild & AfterViewInit:
+------------------------------- The third way to pass data is by using @ViewChild and AfterViewInit. With this final option, we can refer to a child component and access their variables inside our parent component.
+
+Ex:
+---
+
+// Child
+import { Component} from '@angular/core';
+@Component({
+  selector: 'app-child',
+  template: ``
+})
+export class ChildComponent {
+  exampleChild: string = 'Hello Angular 7';
+}
+
+
+The decorator is set in the parent component. We declare the following in the class:
+
+@ViewChild(ChildComponent) childReference;
+
+We also need to implement the AfterViewInit lifecycle hook. Because of the reason that the child is not available until the view is initialized. In the ngAfterViewInit() method we access the exampleChild from the ChildComponent and giving the value to the exampleParent variable.
+
+ngAfterViewInit() {
+  this.exampleParent = this.childReference.exampleChild;
+}
+
+Now ,our complete ParentComponent will be looking like this:
+
+
+// Parent
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { ChildComponent } from './child.component';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    Example: {{ exampleParent }}
+    <app-child></app-child>
+  `
+})
+export class ParentComponent implements AfterViewInit {
+  @ViewChild(ChildComponent) childReference;
+
+  exampleParent: string;
+
+  ngAfterViewInit() {
+    this.exampleParent = this.childReference.exampleChild;
+  }
+}
+
+
+And again through interpolation ({{ exampleParent }} ), we can now see our child’s example text.
+
+
+
+
+
+

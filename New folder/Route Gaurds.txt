@@ -1,0 +1,85 @@
+URL: http://jasonwatmore.com/post/2018/11/22/angular-7-role-based-authorization-tutorial-with-example
+
+1. Route Gaurds:
+================ Angular’s route guards are interfaces which can tell the router whether or not it should allow navigation to a requested route. They make this decision by looking for a true or false return value from a class which implements the given guard interface.
+
+There are five different types of guards and each of them is called in a particular sequence. The router’s behavior is modified differently depending on which guard is used. The guards are:
+
+- CanActivate: to mediate navigation to a route.
+
+- CanActivateChild: to mediate navigation to a child route.
+
+- CanDeactivate: to mediate navigation away from the current route.
+
+- Resolve: to perform route data retrieval before route activation.
+
+- CanLoad: to mediate navigation to a feature module loaded asynchronously.
+
+Note: A guard's return value controls the router's behavior:
+
+		- If it returns true, the navigation process continues.
+		- If it returns false, the navigation process stops and the user stays put.
+		- If it returns a UrlTree, the current navigation cancels and a new navigation is initiated to the UrlTree returned.
+
+
+The guard might return its boolean answer synchronously. But in many cases, the guard can't produce an answer synchronously. The guard could ask the user a question, save changes to the server, or fetch fresh data. These are all asynchronous operations.
+
+Accordingly, a routing guard can return an Observable<boolean> or a Promise<boolean> and the router will wait for the observable to resolve to true or false.
+
+Note: The observable provided to the Router must also complete. If the observable does not complete, the navigation will not continue.
+
+
+You can have multiple guards at every level of a routing hierarchy. The router checks the CanDeactivate and CanActivateChild guards first, from the deepest child route to the top. Then it checks the CanActivate guards from the top down to the deepest child route. If the feature module is loaded asynchronously, the CanLoad guard is checked before the module is loaded. If any guard returns false, pending guards that have not completed will be canceled, and the entire navigation is canceled.
+
+
+
+
+Note:
+=======
+
+1. Angular 6 brought us new better providedIn syntax for registration of services into Angular dependency injection mechanism.
+2. The Old Way of doing DI in Angular — providers: []
+3. The New Way of doing DI in Angular — providedIn: 'root' | SomeModule
+
+Dependency Injection (DI) is a way to create objects that depend on the other objects. A Dependency Injection system supplies the dependent objects
+------------------------- (called the dependencies) when it creates an instance of an object
+
+Earlier, before Angular 6, the only way to do that, was to specify services in the providers: [] property of the @NgModule decorator (or @Component / @Directive but more on that later...)
+
+Using providers: [] property can lead to three different scenarios based on specific circumstances…
+
+We’re specifying providers: [] in the @NgModule decorator of an eagerly imported module
+We’re specifying providers: [] in the @NgModule decorator of a lazy loaded module
+We’re specifying providers: [] in the @Component or @Directive decorator (aka declarables)
+
+
+Now from Angular 6, we got this new shiny tool for modeling the dependencies in our applications. The official name is “Tree-shakable providers” and we use it by employing new providedIn property of the @Injectable decorator.
+
+Here we can think about providedIn as a specifying dependencies in reverse fashion. Instead of module providing all its services, it is now the service itself declaring where it should be provided.
+
+Modules can be providedIn the 'root' or in any of the available modules (eg providedIn: SomeModule). Adding to that, 'root' is in fact an alias for the AppModule (and hence root injector) which is a nice convenience feature which saves us importing of the AppModule all around our code-base.
+
+The providedIn: 'root' solution removes the need to import the library module at all, we can simply inject needed services and it just works !
+
+
+
+
+
+
+1. The auth guard is an angular route guard that's used to prevent unauthorized users from accessing restricted routes, it does this by implementing the CanActivate interface which allows the guard to decide if a route can be activated with the canActivate() method. If the method returns true the route is activated (allowed to proceed), otherwise if the method returns false the route is blocked. 
+
+
+The auth guard uses the authentication service to check if the user is logged in, if they are logged in it checks if their role is authorized to access the requested route. If they are logged in and authorized the canActivate() method reutrns true, otherwise it returns false and redirects the user to the login page.
+
+Angular route guards are attached to routes in the router config, this auth guard is used in app.routing.ts to protect the home page and admin page routes.
+
+Angular 7 Http Error Interceptor:
+------------------------------------
+Path: /src/app/_helpers/error.interceptor.ts
+
+The Error Interceptor intercepts http responses from the api to check if there were any errors. If there is a 401 Unauthorized response the user is automatically logged out of the application, all other errors are re-thrown up to the calling service so an alert error message can be displayed to the user.
+
+It's implemented using the HttpInterceptor class that was introduced in Angular 4.3 as part of the new HttpClientModule. By extending the HttpInterceptor class you can create a custom interceptor to catch all error responses from the server in a single location.
+
+Http interceptors are added to the request pipeline in the providers section of the app.module.ts file.
+

@@ -1,0 +1,23 @@
+<html>
+<body>
+<script>
+var x = 100;//global
+function m(){  
+window.value=200;//declaring global variable by window object  
+alert(value);//100
+alert("The value is: "+value);//
+console.log(x);
+}  
+function n(){  
+//var x =10;//local
+alert(window.value);//accessing global variable from other function  
+console.log(value);//100
+alert("x value is: "+x);
+//console.log("x value is: " +x);
+console.log("n() executed successfully and value is:"+value);// n() executed successfully and value is:100
+}  
+m();
+n();
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<head>
+
+  <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.js"></script>
+   <script src="C:\Users\dell\Desktop\Online_Training\AJS Training\6\angular.js"></script>
+</head>
+<body>
+<div ng-app="app" ng-controller="appCtrl">
+    
+<h3>
+    ValidationError Directive</h3>
+<p>
+    This is a form with validation.</p>
+    
+<form ng-submit="submit()">
+    <input 
+        class="form-control"
+        placeholder="User Name" 
+        ng-model="theName" 
+        required pattern=".{4,}" title="Please enter four characters or more." />
+		<br>
+		<br>
+    <input 
+        class="form-control"
+        placeholder="E-mail" 
+        ng-model="theEmail" 
+        required type="email"/><br>
+    <input 
+        class="form-control"
+        placeholder="Password" 
+        ng-model="thePwd" 
+        type="password" 
+        required pattern=".{4,}" title="Please enter four characters or more." />
+		<br>
+    <input 
+        class="form-control"
+        placeholder="Check Password"
+        type="password"
+        ng-model="chkPwd"
+        validation-error="chkPwd != thePwd ? 'Passwords don\'t match' : ''" />
+		<br>
+    <button 
+        class="btn btn-primary"
+        type="submit">
+        Create Account
+    </button>
+</form>
+    
+</div>    
+<script>
+// define app
+var app = angular.module('app', []);
+
+// define app controller
+app.controller('appCtrl', function ($scope) {
+    $scope.submit = function() {
+        alert('thanks for submitting the form.');
+    }
+});
+
+// define validation-error directive
+app.directive('validationError', function () {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            scope.$watch(attrs['validationError'], function (errMsg) {
+                if (elem[0] && elem[0].setCustomValidity) { // HTML5 validation
+                    elem[0].setCustomValidity(errMsg);
+                }
+                if (ctrl) { // AngularJS validation
+                    ctrl.$setValidity('validationError', errMsg ? false : true);
+                }
+            });
+        }
+    }
+});
+</script>
+</body>
+</html>

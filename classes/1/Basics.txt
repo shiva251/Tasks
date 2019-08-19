@@ -1,0 +1,36 @@
+1. JavaScript is the programming language of HTML and the Web
+
+2. Why JavaScript ?
+
+JavaScript is one of the 3 languages all web developers must learn:
+
+   1. HTML to define the content of web pages
+
+   2. CSS to specify the layout of web pages
+
+   3. JavaScript to program the behavior of web pages
+
+3. It is lightweight and most commonly used as a part of web pages, whose implementations allow client-side script to interact with the user and make dynamic pages. It is an interpreted programming language with object-oriented capabilities.
+
+4. Advantages:
+	a. Less server interaction 
+	b. Immediate feedback to the visitors
+	c. Increased interactivity
+	d. Richer interfaces
+
+5. Limitations:
+	a. Client-side JavaScript does not allow the reading or writing of files. This has been kept for security reason
+	b. JavaScript cannot be used for networking applications because there is no such support available.
+	c. JavaScript doesn't have any multithreading or multiprocessor capabilities.
+
+6. JavaScript can be implemented using JavaScript statements that are placed within the <script>... </script> HTML tags in a web page.
+
+7.  Comments:
+// This is a comment. It is similar to comments in C++
+   
+      /*
+      * This is a multiline comment in JavaScript
+      * It is very similar to comments in C Programming
+      */
+
+8. .js extension

@@ -1,0 +1,20 @@
+<html>
+<body>
+<script>  
+//var data=200;//gloabal variable 
+var data1=500; 
+function a(){  
+var data=250;//local
+document.writeln(data);  //250
+alert(data1);
+console.log(data1);
+}  
+function b(){  
+document.writeln(data1);  //500
+}  
+a();//calling JavaScript function
+b();
+  
+</script>  
+</body>
+</html>

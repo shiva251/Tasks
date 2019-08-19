@@ -1,0 +1,252 @@
+Reference: https://auth0.com/blog/creating-beautiful-apps-with-angular-material/
+
+1. Angular Material:
+---------------------
+
+Angular Material is a third-party package used on Angular projects to facilitate the development process through reutilization of common components like Cards, beautiful Inputs, Data Tables, and so on. The list of available components is big and continues to grow as we speak.
+
+Official website: https://material.angular.io/
+
+
+With Angular, the entire app is a composition of components and, instead of building and styling components from the group up, you can leverage with Angular Material which provides out-of-the-box styled components
+
+1. Install Angular Material: To install Angular Material as a dependency of your project, run the following command:
+
+	npm install @angular/material @angular/cdk
+
+2. Angular Material Theme: After installing Angular Material, you will configure a theme that defines what colors will be used in your Angular Material components. To configure the basic theme, open the src/styles.css file and paste the following code in it:
+
+	@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+3. Angular Material Gesture: Some components like Slide Toggle, Slider, and Tooltip rely on a library called HammerJS to capture touch gestures. So, you will need to install HammerJS and load it into our application.
+
+To do so, from the project root directory, run:
+
+	npm install hammerjs
+	
+After installing it, add the following line at the top of the src/main.ts file:
+
+	import 'hammerjs'; 
+	
+
+4. Material Icons: Another cool thing to add to your project is the Material Icons library. To have access to this huge library of icons, update the src/index.html file as follows:
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	
+
+5. Importing Material Components:
+
+In app.module.ts file:
+
+// ... other import statements ...
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MaterialModule} from './material.module';
+
+@NgModule({
+  // ... declarations property ...
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+  ],
+  // ... providers and bootstrap properties ...
+})
+export class AppModule {}
+
+Note that you are also adding BrowserAnimationsModule so your app can count on some cool animation features (like the shadow on the click of the buttons).
+
+Angular Material Sidenav: After defining a centralized place to import Angular Material components, you can focus on adding a navigation bar to your app. For this, you will update the ./src/app/material.module.ts to look like this:
+
+import {NgModule} from '@angular/core';
+
+import {
+  MatSidenavModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatListModule,
+} from '@angular/material';
+
+@NgModule({
+  imports: [
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+  ],
+  exports: [
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+  ]
+})
+export class MaterialModule {}
+
+This change will make MatSidenavModule available in your application. So, now, you can update the app template (./src/app/app.component.html) to use this component:
+
+html look like:
+
+<mat-sidenav-container>
+  <mat-sidenav  #sidenav role="navigation">
+   <mat-nav-list>
+    <a mat-list-item>
+      <mat-icon class="icon">input</mat-icon>
+      <span class="label">Login</span>
+    </a>
+    <a mat-list-item>
+      <mat-icon class="icon">home</mat-icon>  
+        <span class="label">Home</span>
+    </a>
+    <a mat-list-item>
+      <mat-icon class="icon">dashboard</mat-icon>  
+      <span class="label">Dashboard</span>
+    </a>
+    <a  mat-list-item type="button">
+      <mat-icon class="icon">input</mat-icon>
+      <span class="label">LogOut</span>
+    </a>  
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+     <div fxHide.gt-xs>
+       <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+     <div>
+       <a>
+          Material Blog
+       </a>
+     </div>
+     <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
+        <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+            <li>
+                <a>
+                  <mat-icon class="icon">input</mat-icon>
+                  <span  class="label">Login</span>
+                 </a>
+            </li>
+            <li>
+              <a >
+                  <mat-icon class="icon">home</mat-icon>
+                  <span class="label">Home</span>
+              </a>
+            </li>
+            <li>
+                <a>
+                    <mat-icon class="icon">dashboard</mat-icon>
+                    <span class="label">Dashboard</span>
+                </a>
+              </li>
+            <li>
+                <a>
+                  <mat-icon class="icon">input</mat-icon>
+                  <span class="label">LogOut</span>
+                 </a>
+            </li>
+        </ul>
+     </div>
+    </mat-toolbar>
+    <main>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+
+
+
+Angular Material and Flexbox: To make your life easier when defining the layout of your Angular application, you will take advantage of the Flex layout schema introduced recently on CSS. More specifically, you will use an Angular directive called fxFlex to handle the Flex layout.
+
+To use it, install the Flex layout package with the following command:
+
+	npm install @angular/flex-layout@v5.0.0-beta.14 rxjs-compat
+	
+Then, import and configure it into src/app.module.ts as shown here:
+
+// ... other import statements ...
+import {FlexLayoutModule} from '@angular/flex-layout';
+
+@NgModule({
+  // ... declarations property ...
+  imports: [
+    // ... other modules ...
+    FlexLayoutModule,
+  ],
+  // ... providers and bootstrap properties ...
+})
+export class AppModule {}
+
+
+
+If you take a close look, you will see that you are already using some features of this package in the navigation bar defined before. For example, you have added directives like fxLayout, fxLayoutAlign, and other fxFlex directives.
+
+
+
+
+
+Then you can add css styles also:
+
+CSS:
+
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 250px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover,
+a:active {
+  color: lightgray;
+}
+
+.navigation-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.icon {
+  display: inline-block;
+  height: 30px;
+  margin: 0 auto;
+  padding-right: 5px;
+  text-align: center;
+  vertical-align: middle;
+  width: 15%;
+}
+
+.label {
+  display: inline-block;
+  line-height: 30px;
+  margin: 0;
+  width: 85%;
+}
+
+Also, add the following rule to ./src/styles.css so you don't have any white margins on your app:
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+  margin: 0;
+}
+
+
+With these rules in place, you can issue ng serve from your project root to check your application for the first time.
+
+
+
+Example: https://github.com/auth0-blog/angular-material
+
+
+

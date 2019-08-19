@@ -1,0 +1,90 @@
+﻿New features in Angular 7:
+==========================
+
+1. CLI prompts:
+------------------ In Angular 7, the CLI prompts have been updated to v7.0.2 with new features. For instance, it will now prompt users when typing commands like @angular/material, ng-new, and ng-add to help them discover the in-built SCSS support, routing, and more.
+
+"routing": {
+"type": "boolean",
+"description": "Generates a routing module.",
+"default": false,
+"x-prompt": "Would you like to add Angular routing?"
+}
+
+
+These CLI prompts, in addition, have been added to Schematics, so that all package publishing schematics can now benefit from CLI prompts.
+
+2. Angular material & component dev kit (CDK):
+----------------------------------------------- The Angular 7 introduced minor visual updates & improvements in Material Design that earlier received a major update this year only.
+
+In addition, refresh, virtual scrolling, large lists of data, dynamic loading and unloading of parts of the DOM also were the part of improvements in CDK and Angular Material.
+
+3. Drag & drop:
+--------------- The new drag-drop module basically provides a better way to easily create drag & drop interfaces, which is backed by sorting within a list, support for free dragging, animations, custom drag handles, transferring items between lists, previews, and placeholders.
+
+In simple terms, the Drag-and-Drop support has now been implemented in CDK and it also includes automatic rendering as the users relocates items.
+
+<div cdkDropList class="list" (cdkDropListDropped)="drop($event)">
+	<div class="box" *ngFor="let movie of movies" cdkDrag>{{movie}}</div>
+</div>
+
+drop(event: CdkDragDrop<string[]>) {
+	movieItemInArray(this.movies, event.previousIndex, event.currentIndex);
+}
+
+
+4. Virtual scrolling:
+---------------------- The new Virtual Scrolling in Angular 7 basically loads and unloads items from the DOM depending upon visible parts of lists, resulting into a much faster experiences for users having huge scrollable lists.
+
+This virtual scrolling package basically provides helpers, which react to all scroll events.
+
+
+<cdk-virtual scroll-viewport itemSize="50" class="example-viewport">
+	<div *cdkVirtualFor="let item of items" class="example-item">{{item}}</div>
+</cdk-virtual-scroll-viewport>
+
+
+Simply put, it activates a high-performant way by making the height of container element exactly same as the height of total number of remaining elements to be rendered.
+
+This, in turn, then renders the only visible items in view, creating faster experiences for the end-users.
+
+
+5. Application performance improvements:
+---------------------------------------- The development team at Google have always focused on the performance improvements, and while doing so, they recently found that most of the developers were using reflect-metadata in their production, which actually was only required in the development.
+
+
+"budgets": [{
+"type": "initial",
+"maximumWarning": "2mb",
+"maximumError": "5mb"
+}]
+
+So, to fix this problem, they’ve made a part of Angular 7 to automatically remove this from the polyfills.ts file.
+
+
+6. Drag & Drop:
+----------------
+
+The @angular/cdk/drag-drop module provides you with a way to easily and declaratively create drag-and-drop interfaces, with support for free dragging, sorting within a list, transferring items between lists, animations, touch devices, custom drag handles, previews, and placeholders, in addition helper methods for reordering lists (moveItemInArray) and transferring items between lists (transferArrayItem).
+
+<div cdkDropList class="list" (cdkDropListDropped)="drop("$event)">
+	<div class="box" *ngFor="let movie of movies" cdkDrag>{{movie}}</div>
+
+
+drop(event: CdkDragDrop<string[]>){
+moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
+}
+
+
+Note:
+=====
+1. The Upgrading process is really simple. For most Angular apps out there that are running on Angular 6 and RxJS 6, you only need to run a single command stated below to upgrade to Angular 7.
+
+ng update @angular/cli @angular/core
+
+If, however, you’re using Angular Material, use following single line command and you’re good to go!
+
+ng update @angular/material
+
+
+

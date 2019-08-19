@@ -1,0 +1,341 @@
+1. Angular Component Lifecycle:
+=============================== Every Angular component has a lifecycle. Actually, every Angular component and Angular directive have a lifecycle and the following information can be applied to both. The lifecycle is managed internally by Angular. 
+
+- That is a very simple description of the sequence of events that an Angular component’s life experiences. These events are called “Lifecycle Hooks”.  
+
+- Developers can use these lifecycle hooks to do something (run some code) whenever one of these events occur. There are eight different lifecycle hooks that a developer can tap into in any component or directive. 
+
+- 8 Lifecycle Hooks:
+====================
+
+a. ngOnChanges():
+----------------
+		Used in pretty much any component that has an input.
+		Called whenever an input value changes
+		Is called the first time before ngOnInit
+		
+		
+b. ngOnInit():
+---------------
+
+		Used to initialize data in a component.
+		Called after input values are set when a component is initialized.
+		Added to every component by default by the Angular CLI.
+		Called only once
+		
+		
+c. ngDoCheck():
+---------------
+
+		Called during all change detection runs
+		A run through the view by Angular to update/detect changes
+		
+		
+d. ngAfterContentInit():
+------------------------
+		Called only once after first ngDoCheck()
+		Called after the first run through of initializing content
+		
+		
+e. ngAfterContentChecked():
+---------------------------
+		Called after every ngDoCheck()
+		Waits till after ngAfterContentInit() on first run through
+		
+		
+f. ngAfterViewInit():
+---------------------
+
+		Called after Angular initializes component and child component content.
+		Called only once after view is initialized
+		
+		
+g. ngAfterViewChecked():
+------------------------
+
+		Called after all the content is initialized and checked. (Component and child components).
+		First call is after ngAfterViewInit()
+		Called after every ngAfterContentChecked() call is completed
+		
+		
+h. ngOnDestroy():
+-----------------
+
+		Used to clean up any necessary code when a component is removed from the DOM.
+		Fairly often used to unsubscribe from things like services.
+		Called only once just before component is removed from the DOM.
+		
+		
+Ex:
+===
+
+ngOnInit() {
+    console.log('ngOnInit');
+  }
+  ngOnChanges(){
+    console.log('ngOnChanges');
+  }
+  ngDoCheck(){
+    console.log('ngDoCheck');
+  }
+  ngAfterContentInit(){
+    console.log('ngAfterContentInit');
+  }
+  ngAfterContentChecked(){
+    console.log('ngAfterContentChecked')
+  }
+  ngAfterViewInit(){
+    console.log('ngAfterViewInit');
+  }
+  ngAfterViewChecked(){
+    console.log('ngAfterViewChecked');
+  }
+  ngOnDestroy(){
+    console.log('ngOnDestory');
+  }
+
+  
+		
+
+2. Services:
+============ Components should not fetch or save data directly, and they indeed shouldn’t knowingly present fake data. They should focus on representing data and delegate data access to a service. Services are a great way to share information among classes that do not know each other. When we are developing an Angular app, we will most likely run into a scenario in which we need to use the same code across multiple components. In that case, Services will help us to get rid of this problem. We can share the services code among various components.
+
+To create a service, at the console, type the following command in your root of the folder.
+
+ng g service service-name
+
+Note: 
+----- The generate service file contains the data that we need to consume. This file will hit the GET or POST request to the server and insert or fetch the data. So this file provides services from frontend to backend.
+
+Ex:
+---
+
+@Injectable()
+export class MyService {
+
+  demo= [
+    {id: 1, name: 'aravind'},
+    {id: 2, name: 'kumar'}
+  ];
+  constructor() { }
+  getMyNames()
+  {
+    return this.names;
+  }
+
+  
+  
+  
+
+-- We need to use the services into the component
+
+Ex:
+---
+
+export class AppComponent {
+  coins = [];
+  constructor(private myservice: MyService)
+  {
+    this.names = myservice.getMyNames();
+  }
+  
+  
+In Html:
+
+<tr *ngFor="let item of names">
+    <td>{{item.id}}</td>
+    <td>{{item.name}}</td>
+  </tr>
+  
+  
+  
+With Http client:
+-----------------
+
+In service.ts file: import the following:
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+In order to use the HttpClient, we need to create an instance of it through dependency injection within the constructor:
+
+  constructor(private http: HttpClient) { }
+
+  getUsers() {
+    return this.http.get('....URL../users')
+  }
+  
+ Then,
+
+We also defined a method called getUsers() which we'll call in our component shortly. It returns a list of users from a public testing API.
+
+Before we can use the HTTPClient, we need to add as an import in our app's /src/app/app.module.ts file:
+
+// Other imports removed for brevity
+
+import { HttpClientModule } from '@angular/common/http';  // <-Add here
+
+@NgModule({
+  declarations: [
+    // Removed for brevity
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,  // <-Add here
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+
+
+Now open the component.ts file, we need to import the service
+
+import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+import { Observable } from 'rxjs';
+
+To display the results, we're going to use an Observable, so we're importing it here, too. 
+
+In the class, add:
+
+export class UsersComponent implements OnInit {
+
+  users$: Object;
+  
+  constructor(private data: DataService) { }
+
+  ngOnInit() {
+    this.data.getUsers().subscribe(
+      data => this.users$ = data 
+    );
+  }
+
+}
+In the constructor, we're creating an instance of our service. Then, within the lifecycle hook ngOnInit() (this runs when the component loads), we're calling our getUsers() method and subscribing to it. Inside, we're binding our users$ object to the result returned by the API.
+
+Next, open up /src/app/users/users.component.html:
+
+<h1>Users</h1>
+
+<ul>
+  <li *ngFor="let user of users$">
+    <a routerLink="/details/{{user.id}}">{{ user.name }}</a>
+
+    <ul>
+      <li>{{ user.email }}</li>
+      <li><a href="http://{{ user.website }}">{{ user.website }}</a></li>
+    </ul>
+  </li>
+</ul>
+Whenever you wish to iterate over an array or array of objects, you use the Angular directive *ngFor. We then use interpolation brackets to call upon the properties of the returned object to display them in the browser!
+
+
+Note:
+=====
+
+a. Fetch more data from API: 
+
+for ex: 
+-------
+
+getUser(userId) {
+    return this.http.get('https://jsonplaceholder.typicode.com/users/'+userId)
+  }
+
+  getPosts() {
+    return this.http.get('https://jsonplaceholder.typicode.com/posts')
+  }
+
+- The getUser() method will provide us with a single user's information, which will accept a userId as a parameter.
+
+- getPosts() will fetch some fictional posts for us to get more muscle memory with this process of communicating with services.
+
+component.ts:
+-------------
+
+import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+import { Observable } from 'rxjs';
+import { ActivatedRoute } from "@angular/router";
+
+@Component({
+  selector: 'app-details',
+  templateUrl: './details.component.html',
+  styleUrls: ['./details.component.scss']
+})
+export class DetailsComponent implements OnInit {
+
+  user$: Object;
+  
+  constructor(private route: ActivatedRoute, private data: DataService) { 
+     this.route.params.subscribe( params => this.user$ = params.id );
+  }
+
+  ngOnInit() {
+    this.data.getUser(this.user$).subscribe(
+      data => this.user$ = data 
+    );
+  }
+
+}
+This, as you see, is very similar to our users component. The only difference comes when we import ActivatedRoute and call it within the constructor.
+
+The purpose of this code allows us to grab the id router parameter that we defined in the app's routing file earlier. This will give us access to the user ID and then pass it to the getUser() method that we defined.
+
+Open up the details.component.html and specify:
+-----------------------------------
+
+<h1>{{ user$.name }}</h1>
+
+<ul>
+  <li><strong>Username:</strong> {{ user$.username }}</li>
+  <li><strong>Email:</strong> {{ user$.email }}</li>
+  <li><strong>Phone:</strong> {{ user$.phone }}</li>
+</ul>
+
+ 
+  
+For more data:
+--------------
+
+import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+import { Observable } from 'rxjs';
+
+@Component({
+  selector: 'app-posts',
+  templateUrl: './posts.component.html',
+  styleUrls: ['./posts.component.scss']
+})
+export class PostsComponent implements OnInit {
+  posts$: Object;
+  
+  constructor(private data: DataService) { }
+
+  ngOnInit() {
+    this.data.getPosts().subscribe(
+      data => this.posts$ = data 
+    );
+  }
+
+}
+
+In html:
+
+<h1>Posts</h1>
+
+<ul>
+  <li *ngFor="let post of posts$">
+    <a routerLink="">{{ post.title }}</a>
+
+    <p>{{ post.body }}</p>
+  </li>
+</ul>
+
+
+	
+
+
+
+

@@ -1,0 +1,35 @@
+1. Hoisting variable:
+---------------------
+
+Ex: <!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo"></p>
+
+<script>
+var x = 5; // Initialize x
+var y;     // Declare y
+
+elem = document.getElementById("demo"); // Find an element 
+elem.innerHTML = x + " " + y;           // Display x and y
+
+y = 7;     // Assign 7 to y
+
+</script>
+
+</body>
+</html> 
+
+Note: This is because only the declaration (var y), not the initialization (=7) is hoisted to the top.
+
+Because of hoisting, y has been declared before it is used, but because initializations are not hoisted, the value of y is undefined.
+
+Ex:
+
+var x=5;
+console.log(x);
+console.log(y);
+var y=15;
+
+Output: 5 undefined

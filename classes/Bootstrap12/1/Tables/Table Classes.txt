@@ -1,0 +1,11 @@
+Bordered Table: table-bordered
+
+Hover Rows: table-hover 
+
+Condensed Table: The .table-condensed class makes a table more compact by cutting cell padding in half:
+
+Contextual Classes: Contextual classes can be used to color table rows (<tr>) or table cells (<td>):
+
+Responsive Tables: The .table-responsive class creates a responsive table. The table will then scroll horizontally on small devices (under 768px). When viewing on anything larger than 768px wide, there is no difference:
+
+

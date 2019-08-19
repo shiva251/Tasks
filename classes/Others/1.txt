@@ -1,0 +1,110 @@
+1. Array Object:
+---------------- The Array object is used to store multiple values in a single variable:
+
+var cars = ["Saab", "Volvo", "BMW"];
+
+Array indexes are zero-based: The first element in the array is 0, the second is 1, and so on.
+
+Few methods:
+------------
+
+a. unshift():it adds new items to the beginning of an array, and returns the new length.
+-------------
+Note: This method changes the length of an array.
+
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.unshift("Lemon","Pineapple");
+
+b. push():it adds new items to the end of an array, and returns the new length.
+----------
+Note: The new item(s) will be added at the end of the array.
+
+Note: This method changes the length of the array.
+
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.push("Kiwi");
+
+c. pop(): it removes the last element of an array, and returns that element.
+----------
+Note: This method changes the length of an array.
+
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.pop();
+
+
+d. shift(): it removes the first item of an array.
+-----------
+Note: This method changes the length of the array.
+
+Note: The return value of the shift method is the removed item
+
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.shift();
+
+e. slice(): it  returns the selected elements in an array, as a new array object.
+-----------
+The slice() method selects the elements starting at the given start argument, and ends at, but does not include, the given end argument.
+
+var fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];
+var citrus = fruits.slice(1, 3);
+
+f. reduce(): it reduces the array to a single value.
+------------
+The reduce() method executes a provided function for each value of the array (from left-to-right).
+
+The return value of the function is stored in an accumulator (result/total).
+
+Note: reduce() does not execute the function for array elements without values.
+
+var numbers = [65, 44, 12, 4];
+
+function getSum(total, num) {
+    return total + num;
+}
+function myFunction(item) {
+    document.getElementById("demo").innerHTML = numbers.reduce(getSum);
+}
+
+
+g. map(): The map() method creates a new array with the results of calling a function for every array element.
+---------
+The map() method calls the provided function once for each element in an array, in order.
+
+Note: map() does not execute the function for array elements without values.
+
+Note: map() does not change the original array.
+
+var numbers = [4, 9, 16, 25];
+
+function myFunction() {
+    x = document.getElementById("demo")
+    x.innerHTML = numbers.map(Math.sqrt);
+}
+
+
+h. indexOf(): The indexOf() method searches the array for the specified item, and returns its position.
+-------------
+The search will start at the specified position, or at the beginning if no start position is specified, and end the search at the end of the array.
+
+Returns -1 if the item is not found.
+
+If the item is present more than once, the indexOf method returns the position of the first occurence.
+
+Note: The first item has position 0, the second item has position 1, and so on.
+
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+var a = fruits.indexOf("Apple");
+
+
+
+i. isArray(): determines whether an object is an array.
+-------------
+This function returns true if the object is an array, and false if not.
+
+function myFunction() {
+    var fruits = ["Banana", "Orange", "Apple", "Mango"];
+    var x = document.getElementById("demo");
+    x.innerHTML = Array.isArray(fruits);
+}
+
+

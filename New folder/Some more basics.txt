@@ -1,0 +1,70 @@
+1. Who are building or want to build web client applications under HTML and Typescript (Typescript is compiled into JavaScript).
+
+2. What is Angular 2?
+	Angular 2 is a Framework to build mobile and desktop application. Angular 2 allows the
+
+	“Learn once and write anywhere”.
+
+3.	How Angular 2 works?
+	Angular 2 Framework updates the states based on the Data changes not the DOM changes.
+
+	Angular 2 is Component based Framework, it allows us to create new components to extend the HTML, we can say it’s HTML++
+
+
+4. Can we develop Mobile apps with Angular 2?
+	Angular 2 and NativeScript make the Mobile development (Android, iOS) easy, we will discover how to build Mobile Apps later in our Tutorial. We will learn ionic too.
+
+5. 	Is Angular 2 Compatible with new Browsers?
+	Angular 2 supports the latest versions of Chrome, Edge, Firefox, IE, and Safari, it supports older browsers too.
+
+6. How can we write Angular 2 Code?
+	Using Typescript (a programming language) we can write our Angular 2 code. This typescript code is compiled into Plain JavaScript code. (Browser can only understand JavaScript)
+	
+7. Architecture: Angular 2 is based on Components. The architecture shows us that the component is the main element and the Angular 2 application is a group of Components.
+
+	Terms: A Component is a Class that we can write in Typescript (Programming Language OOP) and this class will be compiled later to a Plain JavaScript (Browsers can only understand JavaScript).
+
+		Inside this Class we can configure our components using Metadata; we can use the metadata to:
+
+		Define the HTML Template (template :’< h2> Angular 2 architecture </h2>’).
+		Define the CSS Style (styles:’.my-css { color:red; }’ )
+		A Component is a Directive.
+
+		Yes, we have 3 types of directives:
+
+		----- Components.
+		----- Structural directives like ngFor (they change the DOM by adding or removing elements).
+		----- Attribute directives like ngStyle (the change the behavior or the appearance of elements).
+		
+		We can use Directives to add some functionality to our Component.
+
+8. How to make components communicate with each other?
+
+	The answer is: selectors and/or routing!
+
+	What are selectors: they are simple HTML Tags (e.g. <hello-world></hello-world>) (<my-component><my-component>).
+	Routing? To navigate from a View to another.
+	
+9. In real life we need to bring some Data to our Component from a Database. We can do such thing with Services. A Service can be used to do more than bringing data to a component (e.g. : do some calculation )
+
+	Services are injected to Components.
+
+	Once Services are injected a component can then access the methods inside Services.
+
+	We will see how this mechanism of injection works later in our tutorials. And the power of Dependency injection (DI).
+
+	Angular 2 comes with a default unidirectional data binding flow. Data flows from Mother to children.
+
+
+10. And we can use the two-way data binding if we want using directives.  [(ngModel)].
+
+11. Why not Angular 3?
+
+Angular 2 has been a single repository. Each package downloadable with the @angular/package-name convention. For example @angular/HTTP, @angular/router
+
+All package names were assigned version 2, but router package by mistaken was given version 3. Therefore, the development team skipped Angular Version 3 and directly named it version 4 to maintain compatibility with Angular Router's version.
+
+
+
+
+
